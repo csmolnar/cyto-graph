@@ -1,0 +1,8 @@
+{
+  "author": "Allen Goodman <allen.goodman@icloud.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "cyto-graph",
+  "repository": "git@github.com:cytoai/cyto-graph.git",
+  "version": "1.0.0"
+}

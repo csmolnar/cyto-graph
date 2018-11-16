@@ -71,7 +71,7 @@ async function loadNetwork(num_classes) {
   return { PretrainedModel: tmpModel, ShallowNet: model };
 }
 
-export async function train(modelDict, datasetObj) {
+export async function train(modelDict: any, datasetObj: any) {
   for (let i = 0; i < TRAIN_BATCHES; i++) {
     // TODO: Change function for getting training batch
     const batch = datasetObj.nextTrainBatch(BATCH_SIZE);
@@ -98,7 +98,7 @@ export async function train(modelDict, datasetObj) {
         // ],
         epochs: 1,
         callbacks: {
-          onBatchEnd: async (batch, logs) => {
+          onBatchEnd: async (batch: any, logs: any) => {
             console.log('Loss:' + logs.loss.toFixed(5));
             console.log('Accuracy:' + logs.acc);
             await tensorflow.nextFrame();
@@ -111,7 +111,7 @@ export async function train(modelDict, datasetObj) {
   return true;
 }
 
-export async function predict(modelDict, datasetObj) {
+export async function predict(modelDict: any, datasetObj: any) {
   //while (isPredicting) {
   tensorflow.tidy(() => {
     // Load img
@@ -145,7 +145,7 @@ export async function predict(modelDict, datasetObj) {
   await tensorflow.nextFrame();
 }
 
-async function run(datasetObj) {
+async function run(datasetObj: any) {
   const model = await loadNetwork(datasetObj.num_classes);
 
   let doneTraining = await train(model, datasetObj);
@@ -176,7 +176,7 @@ class Dataset {
     return this.numClasses;
   }
 
-  loadFromArray(imDataArray) {
+  loadFromArray(imDataArray: any) {
     // function to split into training, validation and prediction set
     if (imDataArray == null) {
       console.log('No Image Data Array given.');
@@ -251,7 +251,7 @@ class Dataset {
     );
   }
 
-  nextTrainBatch(batchSize) {
+  nextTrainBatch(batchSize: any) {
     return this.nextRandomBatch(
       batchSize,
       this.trainingSet,
@@ -265,7 +265,7 @@ class Dataset {
     );
   }
 
-  nextValidationBatch(batchSize) {
+  nextValidationBatch(batchSize: any) {
     return this.nextRandomBatch(
       batchSize,
       this.validationSet,
@@ -280,7 +280,7 @@ class Dataset {
   }
 
   // TODO: change to shuffled indices list
-  nextRandomBatch(batchSize, datasetList, shuffleIndices, updateIndexFunc) {
+  nextRandomBatch(batchSize: any, datasetList: any, shuffleIndices: any, updateIndexFunc: any) {
     let batchXY = [];
 
     for (let i = 0; i < batchSize; i++) {
@@ -290,7 +290,7 @@ class Dataset {
     return this.convertToBatchTensor(batchXY);
   }
 
-  convertToBatchTensor(imageArray) {
+  convertToBatchTensor(imageArray: any) {
     return tensorflow.tidy(() => {
       let xs = null;
       // var ys = null;
@@ -327,7 +327,7 @@ class Dataset {
   }
 }
 
-function getCategoryIndex(categoryId, categories) {
+function getCategoryIndex(categoryId: any, categories: any) {
   let index = 0;
   for (let category of categories) {
     if (categoryId === category.identifier) {
@@ -344,7 +344,7 @@ export async function exportWeights() {
   await preLoadedmodel.save('downloads://classifier');
 }
 
-export async function importWeights(weightsFile) {
+export async function importWeights(weightsFile: any) {
   fetch('https://weights.cyto.ai/mobilenet/model.json')
     .then(function(response) {
       return response.json();
@@ -361,7 +361,7 @@ export async function importWeights(weightsFile) {
     });
 }
 
-function createImageTags(images, imgSources, categories) {
+function createImageTags(images: any, imgSources: any, categories: any) {
   indexMap = {};
   counter = 0;
   categoryIndexArray = [];

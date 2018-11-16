@@ -71,7 +71,7 @@ async function loadNetwork(num_classes) {
   return { PretrainedModel: tmpModel, ShallowNet: model };
 }
 
-async function train(modelDict, datasetObj) {
+export async function train(modelDict, datasetObj) {
   for (let i = 0; i < TRAIN_BATCHES; i++) {
     // TODO: Change function for getting training batch
     const batch = datasetObj.nextTrainBatch(BATCH_SIZE);
@@ -111,7 +111,7 @@ async function train(modelDict, datasetObj) {
   return true;
 }
 
-async function predict(modelDict, datasetObj) {
+export async function predict(modelDict, datasetObj) {
   //while (isPredicting) {
   tensorflow.tidy(() => {
     // Load img
@@ -339,12 +339,12 @@ function getCategoryIndex(categoryId, categories) {
   return null;
 }
 
-async function exportWeights() {
+export async function exportWeights() {
   const preLoadedmodel = await tensorflow.loadModel('indexeddb://classifier');
   await preLoadedmodel.save('downloads://classifier');
 }
 
-async function importWeights(weightsFile) {
+export async function importWeights(weightsFile) {
   fetch('https://weights.cyto.ai/mobilenet/model.json')
     .then(function(response) {
       return response.json();
@@ -381,5 +381,3 @@ function createImageTags(images, imgSources, categories) {
   });
   return imageTags;
 }
-
-export { exportWeights, importWeights };

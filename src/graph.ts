@@ -1,7 +1,7 @@
 import * as tensorflow from '@tensorflow/tfjs';
 
 let indexMap = {};
-let categoryIndexArray = [];
+let categoryIndexArray: never[] = [];
 let counter = 0;
 
 const LEARNING_RATE = 1e-4;
@@ -19,7 +19,7 @@ const TEST_ITERATION_FREQUENCY = 5;
 
 let VALIDATIONSET_RATIO = 0.3;
 
-async function loadNetwork(num_classes) {
+async function loadNetwork(num_classes: any) {
   //get Prelaoded model of MobileNet
   const preLoadedmodel = await tensorflow.loadModel('indexeddb://classifier');
 
@@ -61,6 +61,7 @@ async function loadNetwork(num_classes) {
       })
     ]
   });
+  
   //compile the model
   model.compile({
     optimizer: optimizer,
@@ -158,19 +159,14 @@ async function run(datasetObj: any) {
 }
 
 class Dataset {
-  constructor() {
-    this.numClasses = 0;
-
-    this.trainingSet = [];
-    this.trainingSetShuffledIndices = [];
-    this.trainingSetIndex = 0;
-
-    this.validationSet = [];
-    this.validationSetIndex = 0;
-    this.validationSetShuffledIndices = [];
-
-    this.predictionSet = [];
-  }
+  numClasses: number = 0;
+  trainingSet: never[] = [];
+  trainingSetShuffledIndices: never[] = [];
+  trainingSetIndex: number = 0;
+  validationSet: never[] = [];
+  validationSetIndex: number = 0;
+  validationSetShuffledIndices: never[] = [];
+  predictionSet: never[] = [];
 
   get num_classes() {
     return this.numClasses;
